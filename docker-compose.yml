@@ -1,0 +1,27 @@
+version: "3.5"
+
+services: 
+
+  postgres: 
+    image: postgres:14.3
+    restart: always
+    ports: 
+      - "5432:5432"
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=SCE
+    container_name: sce_db
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment: 
+      PGADMIN_DEFAULT_EMAIL: 'admin@admin.com'
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports: 
+      - "80:80"
+    depends_on:
+      - postgres

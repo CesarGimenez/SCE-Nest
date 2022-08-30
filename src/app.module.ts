@@ -20,6 +20,10 @@ import { ConfigModule } from '@nestjs/config';
     }),
     UsersModule,
     TypeOrmModule.forRoot({
+      ssl: process.env.ENV === 'prod',
+      extra: {
+        ssl: process.env.ENV === 'prod' ? { rejectUnauthorized: false } : null,
+      },
       type: 'postgres',
       host: process.env.HOST,
       port: +process.env.PORT,
